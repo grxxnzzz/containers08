@@ -19,7 +19,7 @@ jobs:
       - name: Run tests
         run: |
           docker run --name test-container -v database:/var/www/db containers08 \
-            sh -c "cp -r /var/www/html/tests /var/www/tests && php /var/www/tests/tests.php"
+            php /var/www/tests/tests.php
       
       - name: Cleanup
         run: |
