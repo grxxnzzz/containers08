@@ -14,3 +14,4 @@ RUN cat /var/www/db/schema.sql | sqlite3 /var/www/db/db.sqlite && \
 
 COPY site /var/www/html
 COPY tests /var/www/tests
+COPY site/config.php /var/www/site/config.php
