@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Build Docker image
+        run: docker build -t containers08 .
+      
+      - name: Run tests
+        run: |
+          docker run --name test-container -v database:/var/www/db containers08 \
+            sh -c "cp -r /var/www/html/tests /var/www/tests && php /var/www/tests/tests.php"
+      
+      - name: Cleanup
+        run: |
+          docker rm -f test-container
+          docker rmi containers08
+          docker volume rm database
